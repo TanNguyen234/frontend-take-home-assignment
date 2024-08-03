@@ -49,6 +49,14 @@ export const CreateTodoForm = () => {
         onChange={(e) => {
           setTodoBody(e.target.value)
         }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            createTodo({
+              body: todoBody,
+            })
+            setTodoBody('')
+          }
+        }}
         className="flex-1 px-4 text-base placeholder:text-gray-400 focus:outline-none"
       />
 
@@ -61,6 +69,10 @@ export const CreateTodoForm = () => {
           })
           setTodoBody('')
         }}
+        className=".align-center h-[36px] w-[67px]
+         rounded-[18px] bg-gray-700 
+         p-[8px] pl-[20px] 
+         pr-[20px] text-[14px] font-bold text-white"
       >
         Add
       </button>
