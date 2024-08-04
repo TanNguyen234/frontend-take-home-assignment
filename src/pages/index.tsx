@@ -27,7 +27,11 @@ const Index = () => {
         <h1 className="text-center text-4xl font-extrabold text-gray-900">
           Todo App
         </h1>
-        <Tabs.Root className="TabsRoot pt-10" defaultValue="all">
+        <Tabs.Root
+          className="TabsRoot pt-10"
+          defaultValue="all"
+          onValueChange={setActiveTab}
+        >
           <Tabs.List
             className="TabsList grid auto-cols-min grid-flow-col gap-[8px]"
             aria-label="Manage your account"
@@ -36,7 +40,6 @@ const Index = () => {
               className={`TabsTrigger h-[44px] w-[66px] rounded-[22px] border-gray-200 p-[12px] pl-[24px] pr-[24px] ${
                 activeTab == 'all' ? 'bg-gray-700 text-white' : 'border'
               }`}
-              onClick={() => setActiveTab('all')}
               value="all"
             >
               All
@@ -45,7 +48,6 @@ const Index = () => {
               className={`TabsTrigger h-[44px] w-[104px] rounded-[22px] border-gray-200 p-[12px] ${
                 activeTab == 'pending' ? 'bg-gray-700 text-white' : 'border'
               }`}
-              onClick={() => setActiveTab('pending')}
               value="pending"
             >
               Pending
@@ -54,36 +56,33 @@ const Index = () => {
               className={`TabsTrigger h-[44px] w-[124px] rounded-[22px] border-gray-200 ${
                 activeTab == 'completed' ? 'bg-gray-700 text-white' : 'border'
               }`}
-              onClick={() => setActiveTab('completed')}
               value="completed"
             >
               Completed
             </Tabs.Trigger>
           </Tabs.List>
+
           <Tabs.Content className="TabsContent" value="all">
             <div className="pt-10">
               <TodoList filter="all" />
             </div>
-            <div className="pt-10">
-              <CreateTodoForm />
-            </div>
           </Tabs.Content>
+
           <Tabs.Content className="TabsContent" value="pending">
             <div className="pt-10">
               <TodoList filter="pending" />
             </div>
-            <div className="pt-10">
-              <CreateTodoForm />
-            </div>
           </Tabs.Content>
+
           <Tabs.Content className="TabsContent" value="completed">
             <div className="pt-10">
               <TodoList filter="completed" />
             </div>
-            <div className="pt-10">
-              <CreateTodoForm />
-            </div>
           </Tabs.Content>
+
+          <div className="pt-10">
+            <CreateTodoForm />
+          </div>
         </Tabs.Root>
       </div>
     </main>

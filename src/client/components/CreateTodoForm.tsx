@@ -35,8 +35,23 @@ export const CreateTodoForm = () => {
       },
     })
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const todoBodyCheked = todoBody.trim()
+    if (todoBodyCheked !== '') {
+      createTodo({
+        body: todoBodyCheked,
+      })
+      setTodoBody('')
+    }
+  }
+
   return (
-    <form className="group flex items-center justify-between rounded-12 border border-gray-200 py-2 pr-4 focus-within:border-gray-400">
+    <form
+      onSubmit={handleSubmit}
+      className="group flex items-center justify-between 
+      rounded-12 border border-gray-200 py-2 pr-4 focus-within:border-gray-400"
+    >
       <label htmlFor={TODO_INPUT_ID} className="sr-only">
         Add todo
       </label>
@@ -49,19 +64,11 @@ export const CreateTodoForm = () => {
         onChange={(e) => {
           setTodoBody(e.target.value)
         }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            createTodo({
-              body: todoBody,
-            })
-            setTodoBody('')
-          }
-        }}
         className="flex-1 px-4 text-base placeholder:text-gray-400 focus:outline-none"
       />
 
       <button
-        type="button"
+        type="submit"
         disabled={isCreatingTodo}
         onClick={() => {
           createTodo({
@@ -70,7 +77,7 @@ export const CreateTodoForm = () => {
           setTodoBody('')
         }}
         className=".align-center h-[36px] w-[67px]
-         rounded-[18px] bg-gray-700 
+         rounded-full bg-gray-700 
          p-[8px] pl-[20px] 
          pr-[20px] text-[14px] font-bold text-white"
       >

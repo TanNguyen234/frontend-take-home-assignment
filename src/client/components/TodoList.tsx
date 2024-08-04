@@ -1,5 +1,4 @@
-import type { SVGProps } from 'react'
-
+import { useCallback, type SVGProps } from 'react'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
@@ -87,9 +86,9 @@ export const TodoList: React.FC<TodoListProps> = ({ filter }) => {
     },
   })
 
-  const changeStatus = (status: string) => {
+  const changeStatus = useCallback((status: string) => {
     return status === 'pending' ? 'completed' : 'pending'
-  }
+  }, [])
 
   const [todoList] = useAutoAnimate()
 
@@ -97,12 +96,16 @@ export const TodoList: React.FC<TodoListProps> = ({ filter }) => {
     <ul className="grid grid-cols-1 gap-y-3" ref={todoList}>
       {todos.map((todo) => (
         <li key={todo.id}>
-          <div className="flex items-center rounded-12 border border-gray-200 px-4 py-3 shadow-sm">
+          <div
+            className={`flex items-center rounded-full border border-gray-200 px-4 py-3 shadow-sm ${
+              todo.status === 'completed' ? 'bg-gray-50' : ''
+            }`}
+          >
             <Checkbox.Root
               id={String(todo.id)}
               disabled={isUpdatingTodo}
               className="flex h-6 w-6 items-center justify-center rounded-6 border border-gray-300 focus:border-gray-700 focus:outline-none data-[state=checked]:border-gray-700 data-[state=checked]:bg-gray-700"
-              onClick={() =>
+              onCheckedChange={() =>
                 updateTodo({
                   todoId: todo.id,
                   status: changeStatus(todo.status as 'pending' | 'completed'),
@@ -124,7 +127,7 @@ export const TodoList: React.FC<TodoListProps> = ({ filter }) => {
             <label
               className={
                 todo.status === 'completed'
-                  ? 'leading-24 flex w-[304px] flex-1 pl-[10px] font-medium text-gray-500 line-through'
+                  ? 'leading-24 flex w-[304px] flex-1 bg-gray-50 pl-[10px] font-medium text-gray-500 line-through'
                   : 'flex w-[304px] flex-1 pl-[10px]  font-medium text-gray-700'
               }
               htmlFor={String(todo.id)}
